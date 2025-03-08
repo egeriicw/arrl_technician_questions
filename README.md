@@ -1,70 +1,149 @@
-# Getting Started with Create React App
+# ARRL Technician License Flashcards
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based flashcard application designed to help users study for the ARRL Technician License exam. This interactive learning tool provides a dynamic way to practice exam questions with immediate feedback and progress tracking.
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+This application presents ARRL Technician License exam questions in a flashcard format, allowing users to:
+- Study questions in a randomized order
+- Receive immediate feedback on answers
+- Track progress and performance
+- Review incorrect answers
+- Save incorrect answers for later review
+- Practice until mastery
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Core Functionality
+- **Interactive Flashcards**: Each card displays a question and four multiple-choice answers
+- **Dual Input Methods**: 
+  - Click answers with mouse
+  - Use keyboard keys (A, B, C, D) to select answers
+- **Question Management**:
+  - Questions are randomly selected
+  - Each question appears only once until all questions have been shown
+  - Questions automatically refresh when all have been answered
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Answer Feedback
+- **Visual Feedback**:
+  - Correct answers highlighted in green
+  - Incorrect answers highlighted in red
+  - Large red 'X' displayed for wrong answers
+  - Correct answer shown after incorrect response
+- **Timing**:
+  - 2-second delay after correct answers
+  - 4-second delay after incorrect answers for better retention
 
-### `npm test`
+### Progress Tracking
+- **Session Information**:
+  - Unique session ID displayed (format: YYYY-MM-DD_HH-MM-SS_randomString)
+  - New session ID generated on start, restart, and exit
+- **Score Display**:
+  - Running total of correct answers
+  - Percentage score calculation
+  - Number of remaining questions shown
+- **Question Identification**:
+  - Question ID displayed
+  - Question number reference shown
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Study Session Controls
+- **Session Management**:
+  - Start Quiz: Begin a new study session with new session ID
+  - Skip: Move to next question without answering
+  - Review: View all incorrect answers
+  - Save: Save incorrect answers to server (available throughout the session)
+  - Restart: Begin fresh with all questions and new session ID
+  - Exit: Return to start screen with new session ID
 
-### `npm run build`
+### Review System
+- **Incorrect Answer Review**:
+  - Dedicated review screen for missed questions
+  - Shows both selected and correct answers
+  - Option to save incorrect answers to server
+  - Option to resume quiz or exit to start
+  - Review screen accessible via Review button
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Save Functionality
+- **Server-Based Saving**:
+  - Automatic saving on restart and exit (if incorrect answers exist)
+  - Manual saving available throughout the session
+  - Files saved in server's 'incorrect_answers' directory
+  - Unique session ID ensures no file conflicts
+  - File naming format: incorrect-answers-[sessionId].json
+- **Save Data Structure**:
+  ```json
+  {
+    "sessionId": "YYYY-MM-DD_HH-MM-SS_randomString",
+    "timestamp": "ISO-8601 timestamp",
+    "score": {
+      "correct": number,
+      "total": number,
+      "percentage": number
+    },
+    "incorrectAnswers": [
+      {
+        "questionId": number,
+        "question": "string",
+        "selectedAnswer": "string",
+        "correctAnswer": "string",
+        "answers": [
+          {
+            "text": "string",
+            "letter": "string"
+          }
+        ]
+      }
+    ]
+  }
+  ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### User Interface
+- **Clean, Modern Design**:
+  - Centered card layout
+  - Clear typography
+  - Subtle hover effects
+  - Responsive button controls
+- **Color-Coded Feedback**:
+  - Intuitive color scheme for answers
+  - High contrast for readability
+  - Clear visual hierarchy
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Technical Implementation
+- Built with React and modern JavaScript
+- Utilizes React Hooks for state management
+- Implements Tailwind CSS for styling
+- Express.js backend for file saving
+- Responsive and accessible design
+- Modular component architecture
 
-### `npm run eject`
+## Getting Started
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start both the frontend and backend servers:
+   ```bash
+   # Terminal 1 - Start the frontend
+   npm start
+   
+   # Terminal 2 - Start the backend
+   node server.js
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Click "Start Quiz" to begin (generates new session ID)
+2. Select answers by clicking or using keyboard keys A-D
+3. View feedback and correct answers
+4. Use control buttons to manage your study session
+5. Click "Review" to see incorrect answers
+6. Save incorrect answers at any time using the Save button
+7. Restart or exit will automatically save incorrect answers
+8. Each new session (start/restart/exit) generates a new session ID
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Contributing
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Contributions are welcome! Please feel free to submit a Pull Request.
